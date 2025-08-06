@@ -31,7 +31,7 @@ uri="http://www.springframework.org/tags/form" prefix="form" %>
                         action="/admin/user/update"
                         modelAttribute="newUser"
                     >
-                        <div class="mb-3">
+                        <div class="mb-3" style="display: none">
                             <label class="form-label">Id:</label>
                             <form:input
                                 type="text"

@@ -1,5 +1,7 @@
 package com.tamkeyboard.giadungshop.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.tamkeyboard.giadungshop.domain.User;
@@ -17,5 +19,13 @@ public class UserService {
         User eric = this.userRepository.save(user);
         System.out.println(eric);
         return eric;
+    }
+
+    public List<User> getAllUsers() {
+        return this.userRepository.findAll();
+    }
+
+    public List<User> getAllUsersByEmail(String email) {
+        return this.userRepository.findOneByEmail(email);
     }
 }

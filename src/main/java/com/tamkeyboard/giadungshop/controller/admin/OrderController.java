@@ -1,12 +1,12 @@
-package com.tamkeyboard.giadungshop.controller;
+package com.tamkeyboard.giadungshop.controller.admin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class DashboardController {
-    @GetMapping("/admin")
+public class OrderController {
+    @GetMapping("/admin/order")
     public String getDashboard() {
-        return "admin/dashboard/show";
+        return "admin/order/show";
     }
 }

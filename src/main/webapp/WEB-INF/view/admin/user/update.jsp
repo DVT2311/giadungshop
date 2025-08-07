@@ -46,6 +46,7 @@ uri="http://www.springframework.org/tags/form" prefix="form" %>
                                 type="email"
                                 class="form-control"
                                 path="email"
+                                disabled="true"
                             />
                         </div>
 

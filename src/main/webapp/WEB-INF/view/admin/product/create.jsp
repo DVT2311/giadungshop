@@ -43,7 +43,10 @@ uri="http://www.springframework.org/tags/form" %>
                             <li class="breadcrumb-item">
                                 <a href="/admin">Dashboard</a>
                             </li>
-                            <li class="breadcrumb-item active">Product</li>
+                            <li class="breadcrumb-item">
+                                <a href="/admin/product">Product</a>
+                            </li>
+                            <li class="breadcrumb-item active">Create</li>
                         </ol>
                         <div class="mt-5">
                             <div class="row">
@@ -52,20 +55,52 @@ uri="http://www.springframework.org/tags/form" %>
                                     <hr />
                                     <form:form
                                         method="post"
-                                        action="/admin/user/create"
+                                        action="/admin/product/create"
                                         class="row"
                                         enctype="multipart/form-data"
                                         modelAttribute="newProduct"
                                     >
+                                        <c:set var="errorName">
+                                            <form:errors
+                                                path="name"
+                                                cssClass="invalid-feedback"
+                                            />
+                                        </c:set>
+                                        <c:set var="errorPrice">
+                                            <form:errors
+                                                path="price"
+                                                cssClass="invalid-feedback"
+                                            />
+                                        </c:set>
+                                        <c:set var="errorDetailDesc">
+                                            <form:errors
+                                                path="detailDesc"
+                                                cssClass="invalid-feedback"
+                                            />
+                                        </c:set>
+                                        <c:set var="errorShortDesc">
+                                            <form:errors
+                                                path="shortDesc"
+                                                cssClass="invalid-feedback"
+                                            />
+                                        </c:set>
+                                        <c:set var="errorQuantity">
+                                            <form:errors
+                                                path="quantity"
+                                                cssClass="invalid-feedback"
+                                            />
+                                        </c:set>
+
                                         <div class="mb-3 col-12 col-md-6">
                                             <label class="form-label"
                                                 >Name:</label
                                             >
                                             <form:input
                                                 type="text"
-                                                class="form-control"
+                                                class="form-control ${not empty errorName ? 'is-invalid' : ''}"
                                                 path="name"
                                             />
+                                            ${errorName}
                                         </div>
                                         <div class="mb-3 col-12 col-md-6">
                                             <label class="form-label"
@@ -73,9 +108,10 @@ uri="http://www.springframework.org/tags/form" %>
                                             >
                                             <form:input
                                                 type="number"
-                                                class="form-control"
+                                                class="form-control ${not empty errorPrice ? 'is-invalid' : ''}"
                                                 path="price"
                                             />
+                                            ${errorPrice}
                                         </div>
                                         <div class="mb-3 col-12">
                                             <label class="form-label"
@@ -83,9 +119,10 @@ uri="http://www.springframework.org/tags/form" %>
                                             >
                                             <form:textarea
                                                 type="text"
-                                                class="form-control"
+                                                class="form-control ${not empty errorDetailDesc ? 'is-invalid' : ''}"
                                                 path="detailDesc"
                                             />
+                                            ${errorDetailDesc}
                                         </div>
                                         <div class="mb-3 col-12 col-md-6">
                                             <label class="form-label"
@@ -93,9 +130,10 @@ uri="http://www.springframework.org/tags/form" %>
                                             >
                                             <form:input
                                                 type="text"
-                                                class="form-control"
+                                                class="form-control ${not empty errorShortDesc ? 'is-invalid' : ''}"
                                                 path="shortDesc"
                                             />
+                                            ${errorShortDesc}
                                         </div>
                                         <div class="mb-3 col-12 col-md-6">
                                             <label class="form-label"
@@ -103,9 +141,10 @@ uri="http://www.springframework.org/tags/form" %>
                                             >
                                             <form:input
                                                 type="number"
-                                                class="form-control"
+                                                class="form-control ${not empty errorQuantity ? 'is-invalid' : ''}"
                                                 path="quantity"
                                             />
+                                            ${errorQuantity}
                                         </div>
 
                                         <div class="mb-3 col-12 col-md-6">
@@ -175,7 +214,7 @@ uri="http://www.springframework.org/tags/form" %>
                                                 type="file"
                                                 id="avatarFile"
                                                 accept=".png, .jpg, .jpeg"
-                                                name="hoidanitFile"
+                                                name="ImageProductFile"
                                             />
                                         </div>
                                         <div class="col-12 mb-3">

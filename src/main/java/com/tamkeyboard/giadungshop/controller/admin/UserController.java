@@ -75,10 +75,12 @@ public class UserController {
     public String createUserPage(Model model, @ModelAttribute("newUser") @Valid User user,
             BindingResult newUserBindingResult,
             @RequestParam("avaterFile") MultipartFile file) {
-        List<FieldError> errors = newUserBindingResult.getFieldErrors();
-        for (FieldError error : errors) {
-            System.out.println(">>>>" + error.getField() + " - " + error.getDefaultMessage());
-        }
+
+        // List<FieldError> errors = newUserBindingResult.getFieldErrors();
+        // for (FieldError error : errors) {
+        // System.out.println(">>>>" + error.getField() + " - " +
+        // error.getDefaultMessage());
+        // }
 
         // validate
         if (newUserBindingResult.hasErrors()) {

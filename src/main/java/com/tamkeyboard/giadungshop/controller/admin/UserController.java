@@ -9,6 +9,8 @@ import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,8 @@ import com.tamkeyboard.giadungshop.domain.User;
 import com.tamkeyboard.giadungshop.domain.Role;
 import com.tamkeyboard.giadungshop.services.UploadService;
 import com.tamkeyboard.giadungshop.services.UserService;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class UserController {
@@ -67,10 +71,18 @@ public class UserController {
         return "admin/user/create";
     }
 
-    @RequestMapping(value = "/admin/user/create")
-    public String createUserPage(Model model, @ModelAttribute("newUser") User user,
+    @PostMapping(value = "/admin/user/create")
+    public String createUserPage(Model model, @ModelAttribute("newUser") @Valid User user,
+            BindingResult bindingResult,
             @RequestParam("avaterFile") MultipartFile file) {
-        System.out.println("ROLE khi submit: " + user.getRole().getName());
+        List<FieldError> errors = bindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(">>>>" + error.getObjectName() + " - " + error.getDefaultMessage());
+        }
+
+        // validate
+
+        //
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
         String hashPassword = this.passwordEncoder.encode(user.getPassword());
         // this.userService.handleSaveUser(hoidanit);

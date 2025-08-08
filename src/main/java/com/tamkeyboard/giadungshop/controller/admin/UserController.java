@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,10 +25,12 @@ import com.tamkeyboard.giadungshop.services.UserService;
 public class UserController {
     private UserService userService;
     private final UploadService uploadService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService, UploadService uploadService) {
+    public UserController(UserService userService, UploadService uploadService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.uploadService = uploadService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @RequestMapping("/")
@@ -65,7 +68,13 @@ public class UserController {
     public String createUserPage(Model model, @ModelAttribute("newUser") User user,
             @RequestParam("avaterFile") MultipartFile file) {
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
-        // this.userService.handleSaveUser(user);
+        String hashPassword = this.passwordEncoder.encode(user.getPassword());
+        // this.userService.handleSaveUser(hoidanit);
+        user.setAvatar(avatar);
+        user.setPassword(hashPassword);
+        user.setRole(this.userService.getRoleByName(user.getRole().getName()));
+        // save
+        this.userService.handleSaveUser(user);
         return "redirect:/admin/user";
     }
 

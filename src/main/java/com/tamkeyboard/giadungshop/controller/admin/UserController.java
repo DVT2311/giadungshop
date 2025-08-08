@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.tamkeyboard.giadungshop.domain.User;
+import com.tamkeyboard.giadungshop.domain.Role;
 import com.tamkeyboard.giadungshop.services.UploadService;
 import com.tamkeyboard.giadungshop.services.UserService;
 
@@ -60,13 +61,16 @@ public class UserController {
 
     @GetMapping("/admin/user/create")
     public String getCreateUserPage(Model model) {
-        model.addAttribute("newUser", new User());
+        User user = new User();
+        // user.setRole(new Role());
+        model.addAttribute("newUser", user);
         return "admin/user/create";
     }
 
     @RequestMapping(value = "/admin/user/create")
     public String createUserPage(Model model, @ModelAttribute("newUser") User user,
             @RequestParam("avaterFile") MultipartFile file) {
+        System.out.println("ROLE khi submit: " + user.getRole().getName());
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
         String hashPassword = this.passwordEncoder.encode(user.getPassword());
         // this.userService.handleSaveUser(hoidanit);

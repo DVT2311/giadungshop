@@ -16,6 +16,10 @@ public class Cart {
         }
         items.add(item);
     }
+    
+    public void removeItem(int id) {
+        items.removeIf(i -> i.getId() == id);
+    }
 
     public List<CartItem> getItems() {
         return items;

@@ -10,6 +10,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	
 	List<Product> findTop8ByOrderByIdDesc();
 	
+	List<Product> findTop8ByCategoryOrderByIdDesc(String category);
+	
 	List<Product> findByCategory(String category);
 	
 }

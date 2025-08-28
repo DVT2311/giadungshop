@@ -36,6 +36,10 @@ public class ProductService {
     	return this.productRepository.findTop8ByOrderByIdDesc();
     }
     
+    public List<Product> getTop8ByCategory(String categoryName) {
+        return this.productRepository.findTop8ByCategoryOrderByIdDesc(categoryName);
+    }
+    
     public List<Product> getProductByCategory(String category) {
     	return this.productRepository.findByCategory(category);
     }

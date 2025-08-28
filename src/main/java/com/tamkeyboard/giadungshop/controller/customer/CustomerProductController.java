@@ -21,8 +21,19 @@ public class CustomerProductController {
 
 	@GetMapping("/")
 	public String getTop8Product(Model model) {
-		List<Product> prs = this.productService.getTop8Product();
-		model.addAttribute("top8Pro", prs);
+		List<Product> top8Pro = this.productService.getTop8Product();
+		
+		List<Product> anUong = productService.getTop8ByCategory("do-dung-an-uong");
+        List<Product> nhaBep = productService.getTop8ByCategory("dung-cu-nha-bep");
+        List<Product> veSinh = productService.getTop8ByCategory("ve-sinh-va-phong-tam");
+        List<Product> tapHoa = productService.getTop8ByCategory("do-tap-hoa");
+
+        model.addAttribute("top8Pro", top8Pro);
+        model.addAttribute("anUong", anUong);
+        model.addAttribute("nhaBep", nhaBep);
+        model.addAttribute("veSinh", veSinh);
+        model.addAttribute("tapHoa", tapHoa);
+		
 		return "customer/pages/index";
 	}
 
@@ -51,5 +62,14 @@ public class CustomerProductController {
 		model.addAttribute("category", category);
 		return "customer/pages/category";
 	}
-
+	
+	@GetMapping("/about")
+	public String aboutPage() {
+		return "customer/pages/about";
+	}
+	
+	@GetMapping("/contact")
+	public String contactPage() {
+		return "customer/pages/contact";
+	}
 }

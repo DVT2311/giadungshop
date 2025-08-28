@@ -7,6 +7,10 @@ public class CartItem {
 	private String image;
 	private double price;
 	private int quantity;
+	
+	public CartItem() {
+		super();
+	}
 
 	public CartItem(int id, String name, String image, double price, int quantity) {
 		super();

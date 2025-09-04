@@ -18,7 +18,7 @@
 	<div class="container-fluid p-5">
 		<div class="container-title">
 			<div class="category">
-				<h2 class="section-title" style="visibility: hidden;">${category}</h2>
+				<h2 class="section-title" style="">${category.name}</h2>
 			</div>
 			<div class="price-filter">
 				<label class="lb-filter" for="sort-by">Sắp xếp theo:</label> <select

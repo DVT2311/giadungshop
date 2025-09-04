@@ -133,10 +133,11 @@
 									<div class="mb-3 col-12 col-md-6">
                                         <label class="form-label">Category:</label>
                                         <form:select class="form-select" path="category">
-                                            <form:option value="do-dung-an-uong">Đồ dùng ăn uống</form:option>
-                                            <form:option value="dung-cu-nha-bep">Dụng cụ nhà bếp</form:option>
-                                            <form:option value="ve-sinh-va-phong-tam">Vệ sinh và phòng tắm</form:option>
-                                            <form:option value="do-tap-hoa">Đồ tạp hóa</form:option>
+                                            <c:forEach var="category" items="${categories}">
+                                                <c:if test="${category.status != 0}">
+                                                    <form:option value="${category.id}">${category.name}</form:option>
+                                                </c:if>
+                                            </c:forEach>
                                         </form:select>
                                     </div>
 									<div class="mb-3 col-12 col-md-6">

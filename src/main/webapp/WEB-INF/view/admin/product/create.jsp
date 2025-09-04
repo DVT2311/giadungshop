@@ -81,16 +81,14 @@
 										${errorPrice}
 									</div>
 									<div class="mb-3 col-12">
-										<label class="form-label">Detail
-											description:</label>
+										<label class="form-label">Detail description:</label>
 										<form:textarea type="text"
 											class="form-control ${not empty errorDetailDesc ? 'is-invalid' : ''}"
 											path="detailDesc" />
 										${errorDetailDesc}
 									</div>
 									<div class="mb-3 col-12 col-md-6">
-										<label class="form-label">Short
-											description:</label>
+										<label class="form-label">Short description:</label>
 										<form:input type="text"
 											class="form-control ${not empty errorShortDesc ? 'is-invalid' : ''}"
 											path="shortDesc" />
@@ -119,15 +117,16 @@
 									<div class="mb-3 col-12 col-md-6">
 										<label class="form-label">Category:</label>
 										<form:select class="form-select" path="category">
-                                            <form:option value="do-dung-an-uong">Đồ dùng ăn uống</form:option>
-                                            <form:option value="dung-cu-nha-bep">Dụng cụ nhà bếp</form:option>
-                                            <form:option value="ve-sinh-va-phong-tam">Vệ sinh và phòng tắm</form:option>
-                                            <form:option value="do-tap-hoa">Đồ tạp hóa</form:option>
-                                        </form:select>
+											<c:forEach var="category" items="${categories}">
+												<c:if test="${category.status != 0}">
+													<form:option value="${category.id}">${category.name}</form:option>
+												</c:if>
+											</c:forEach>
+										</form:select>
 									</div>
 									<div class="mb-3 col-12 col-md-6">
-										<label for="avatarFile" class="form-label">Image:</label>
-										<input class="form-control" type="file" id="avatarFile"
+										<label for="avatarFile" class="form-label">Image:</label> <input
+											class="form-control" type="file" id="avatarFile"
 											accept=".png, .jpg, .jpeg" name="ImageProductFile" />
 									</div>
 									<div class="col-12 mb-3">
@@ -135,8 +134,7 @@
 											alt="avatar preview" id="avatarPreview" />
 									</div>
 									<div class="col-12 mb-5">
-										<button type="submit" class="btn btn-primary">
-											Create</button>
+										<button type="submit" class="btn btn-primary">Create</button>
 									</div>
 								</form:form>
 							</div>

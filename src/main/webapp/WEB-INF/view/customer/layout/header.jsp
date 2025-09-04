@@ -6,8 +6,8 @@
 			<i class="fa-solid fa-phone"></i> <span class="txt-top">0358708384</span>
 		</div>
 		<ul class="nav">
-			<li class="nav-item"><a class="nav-link" href="/login">
-					<i class="fa-solid fa-user"></i> <span class="txt-top">Tài
+			<li class="nav-item"><a class="nav-link" href="/login"> <i
+					class="fa-solid fa-user"></i> <span class="txt-top">Tài
 						khoản</span>
 			</a></li>
 			<li class="nav-item"><a id="cart-icon" class="nav-link"
@@ -41,14 +41,12 @@
 						class="nav-link dropdown-toggle" href="#"
 						data-bs-toggle="dropdown">Sản phẩm</a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item"
-								href="/category/do-dung-an-uong">Đồ dùng ăn uống</a></li>
-							<li><a class="dropdown-item"
-								href="/category/dung-cu-nha-bep">Dụng cụ nhà bếp</a></li>
-							<li><a class="dropdown-item"
-								href="/category/ve-sinh-va-phong-tam">Vệ sinh và phòng tắm</a></li>
-							<li><a class="dropdown-item" href="/category/do-tap-hoa">Đồ
-									tạp hóa</a></li>
+							<c:forEach var="category" items="${categories}">
+								<c:if test="${category.status != 0}">
+									<li><a class="dropdown-item"
+										href="/category/${category.id}">${category.name}</a></li>
+								</c:if>
+							</c:forEach>
 						</ul></li>
 					<li class="nav-item"><a class="nav-link" href="/contact">Liên
 							hệ</a></li>

@@ -5,11 +5,13 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.tamkeyboard.giadungshop.domain.Category;
 import com.tamkeyboard.giadungshop.domain.Product;
 import com.tamkeyboard.giadungshop.repository.ProductRepository;
 
 @Service
 public class ProductService {
+	
     private final ProductRepository productRepository;
 
     public ProductService(ProductRepository productRepository) {
@@ -36,11 +38,11 @@ public class ProductService {
     	return this.productRepository.findTop8ByOrderByIdDesc();
     }
     
-    public List<Product> getTop8ByCategory(String categoryName) {
-        return this.productRepository.findTop8ByCategoryOrderByIdDesc(categoryName);
+    public List<Product> getTop8ByCategory(Long categoryId) {
+        return this.productRepository.findTop8ByCategory_IdOrderByIdDesc(categoryId);
     }
     
-    public List<Product> getProductByCategory(String category) {
+    public List<Product> getProductByCategory(Category category) {
     	return this.productRepository.findByCategory(category);
     }
 }

@@ -8,6 +8,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.tamkeyboard.giadungshop.domain.Category;
 import com.tamkeyboard.giadungshop.domain.Product;
+import com.tamkeyboard.giadungshop.services.CategoryService;
 import com.tamkeyboard.giadungshop.services.ProductService;
 import com.tamkeyboard.giadungshop.services.UploadService;
 
@@ -26,17 +29,21 @@ import jakarta.validation.Valid;
 
 @Controller
 public class ProductController {
+	
+	private final CategoryService categoryService;
+	
     private final UploadService uploadService;
+	
     private final ProductService productService;
 
-    public ProductController(
-            UploadService uploadService,
-            ProductService productService) {
-        this.uploadService = uploadService;
-        this.productService = productService;
-    }
+    public ProductController(CategoryService categoryService, UploadService uploadService,
+			ProductService productService) {
+		this.categoryService = categoryService;
+		this.uploadService = uploadService;
+		this.productService = productService;
+	}
 
-    @GetMapping("/admin/product")
+	@GetMapping("/admin/product")
     public String getProduct(Model model) {
         List<Product> prs = this.productService.fetchProducts();
         model.addAttribute("products", prs);
@@ -45,7 +52,9 @@ public class ProductController {
 
     @GetMapping("/admin/product/create")
     public String getCreateProductPage(Model model) {
+    	List<Category> categories = this.categoryService.findAllCategories();
         model.addAttribute("newProduct", new Product());
+        model.addAttribute("categories", categories);
         return "admin/product/create";
     }
 

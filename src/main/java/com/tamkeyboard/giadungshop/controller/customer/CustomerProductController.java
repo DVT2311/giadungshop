@@ -1,41 +1,54 @@
 package com.tamkeyboard.giadungshop.controller.customer;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.tamkeyboard.giadungshop.domain.Category;
 import com.tamkeyboard.giadungshop.domain.Product;
+import com.tamkeyboard.giadungshop.services.CategoryService;
 import com.tamkeyboard.giadungshop.services.ProductService;
 
 @Controller
 public class CustomerProductController {
 
-	private final ProductService productService;
-
-	public CustomerProductController(ProductService productService) {
-		this.productService = productService;
-	}
+	@Autowired
+	private ProductService productService;
+	
+	@Autowired
+	private CategoryService categoryService;
+	
+	@ModelAttribute("categories")
+    public List<Category> categories() {
+        return categoryService.findAllCategories();
+    }
 
 	@GetMapping("/")
-	public String getTop8Product(Model model) {
-		List<Product> top8Pro = this.productService.getTop8Product();
-		
-		List<Product> anUong = productService.getTop8ByCategory("do-dung-an-uong");
-        List<Product> nhaBep = productService.getTop8ByCategory("dung-cu-nha-bep");
-        List<Product> veSinh = productService.getTop8ByCategory("ve-sinh-va-phong-tam");
-        List<Product> tapHoa = productService.getTop8ByCategory("do-tap-hoa");
+	public String mainPage(Model model) {
+	    // 8 sản phẩm mới nhất
+	    List<Product> top8Pro = productService.getTop8Product();
+	    model.addAttribute("top8Pro", top8Pro);
 
-        model.addAttribute("top8Pro", top8Pro);
-        model.addAttribute("anUong", anUong);
-        model.addAttribute("nhaBep", nhaBep);
-        model.addAttribute("veSinh", veSinh);
-        model.addAttribute("tapHoa", tapHoa);
-		
-		return "customer/pages/index";
+	    // Lấy 8 sản phẩm cho từng category
+	    Map<Long, List<Product>> categoryProducts = new HashMap<>();
+	    for (Category category : categories()) {
+	        categoryProducts.put(category.getId(), productService.getTop8ByCategory(category.getId()));
+	    }
+	    model.addAttribute("categoryProducts", categoryProducts);
+
+	    return "customer/pages/index";
 	}
+
+
 
 	@GetMapping("/login")
 	public String loginPage() {
@@ -56,7 +69,7 @@ public class CustomerProductController {
     }
 
 	@GetMapping("/category/{category}")
-	public String getProductsByCategory(@PathVariable("category") String category, Model model) {
+	public String getProductsByCategory(@PathVariable("category") Category category, Model model) {
 		List<Product> products = productService.getProductByCategory(category);
 		model.addAttribute("products", products);
 		model.addAttribute("category", category);
